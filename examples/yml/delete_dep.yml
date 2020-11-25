@@ -1,0 +1,5 @@
+"method": "get"
+"url": "https://qyapi.weixin.qq.com/cgi-bin/department/delete"
+"params":
+  "access_token": "$token"
+  id: $dep_id

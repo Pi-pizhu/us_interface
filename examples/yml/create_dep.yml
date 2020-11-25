@@ -1,0 +1,8 @@
+method: post
+url: https://qyapi.weixin.qq.com/cgi-bin/department/create
+params:
+  access_token: "$token"
+json:
+   name: $dep_name
+   name_en: $dep_name_en
+   parentid: $p_id
