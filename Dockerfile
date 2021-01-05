@@ -6,3 +6,4 @@ RUN apt-get update \
     && cd /opt/api-test
     && git clone git@github.com:Pi-pizhu/us_interface.git
     && pip3 install -r us_interface/requirements.txt
+WORKDIR /opt/api-test/us_interface
