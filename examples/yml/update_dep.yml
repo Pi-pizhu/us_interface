@@ -1,9 +1,0 @@
-method: post
-url: 'https://qyapi.weixin.qq.com/cgi-bin/department/update'
-params:
-  access_token: "$token"
-json:
-  id: $dep_id
-  name: $dep_name
-  name_en: $dep_name_en
-  parentid: $p_id

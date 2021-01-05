@@ -1,0 +1,30 @@
+# 获取部门信息的api
+get:
+  "method": "get"
+  "url": "/cgi-bin/department/list"
+  "params": "access_token=${token}&id=${id}"
+
+# 增加部门信息的api,每增加一次就会递增
+add:
+  "method": "post"
+  "url": "/cgi-bin/department/create"
+  "params": "access_token=${token}"
+  "json":
+      "name": "$name"
+      "parentid": $parentid
+
+
+# 删除部门信息的api
+delete:
+  "method": "get"
+  "url": "/cgi-bin/department/delete"
+  "params": "access_token=${token}&id=${id}"
+
+# 更新部门信息的api
+edit:
+  "method": "post"
+  "url": "/cgi-bin/department/update"
+  "params": "access_token=${token}"
+  "json":
+    "name": "$name"
+    "id": $id

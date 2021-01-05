@@ -1,0 +1,5 @@
+token:
+    method: get
+    url: /cgi-bin/gettoken
+    params: corpid=$corp_id&corpsecret=$secret
+#    a: https://qyapi.weixin.qq.com
