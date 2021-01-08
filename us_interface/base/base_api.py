@@ -1,9 +1,5 @@
-import json
-import os
-import re
-import sys
+import json, os, re, sys, requests
 from urllib import parse
-import requests
 from string import Template
 from us_interface.config.global_config import GlobalConfig
 from loguru import logger
@@ -16,10 +12,16 @@ _hosts_compile = re.compile(
 
 
 class BaseApi:
-    _gl_config = GlobalConfig("/Users/yewenkai/PycharmProjects/HogwartsSDET14/us_interface/examples")
-    _request_way = "https" or _gl_config.get_global_variable("env", "request_way")
-    _domain_name = _gl_config.get_global_variable("hosts", "domain_name")
-    _url = _gl_config.get_global_variable("hosts", _gl_config.get_global_variable("hosts", "default"))
+
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        self._test_root_path = self._get_test_root_path()
+        self._get_global_config(self._test_root_path)
+        self._get_url_config()
 
     def _get_test_root_path(self):
         # 获取用例的根目录
@@ -35,7 +37,44 @@ class BaseApi:
     def _get_global_config(self, test_root_dir):
         # 获取全局配置信息config
         self._gl_config = GlobalConfig(test_root_dir)
-        self.gl_config_data = self._gl_config.config_var
+        self._gl_config_data = self._gl_config.config_var
+
+    def _get_url_config(self):
+        self._url_config = {}
+        self._url_config["request_way"] = self._gl_config.get_global_variable("hosts", "request_way")
+        self._url_config["domain_name"] = self._gl_config.get_global_variable("hosts", "domain_name")
+        self._url_config["url"] = self._gl_config.get_global_variable(
+            "hosts",
+            self._gl_config.get_global_variable("hosts", "default")
+        )
+
+    def request_main(self, test_api, test_params=None, req_type="tcp", test_describe=None):
+        """
+        对api接口信息进行变量替换
+        对url进行检查替换
+        分别进入各种协议请求方法
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        # 先合并局部+全局配置
+        params = self._gl_config_data
+        if test_params:
+            params.update(test_params)
+
+        # 进行test_api替换
+        test_api = self.template_data(test_api, params)
+        # 检查url
+        test_step = json.loads(test_api)
+        test_step = self.replace_hosts(test_step.get("url"))
+        # 发送请求
+        if req_type == "tcp":
+            response = self.request_http(test_step)
+        elif req_type == "udp":
+            pass
+
+        # todo:是否需要提取数据 -> 要不要放在这里呢
+        return response
 
     def request_http(self, req_data):
         req_data = json.loads(req_data)
@@ -73,11 +112,11 @@ class BaseApi:
         # 检查是否需要替换/添加 域名 ip
 
         if re.search(_url_compile, hosts) or re.search(_hosts_compile, hosts):
-            if self._domain_name and re.search(self._domain_name, hosts):
-                new_hosts = hosts.replace(self._domain_name, self._url)
+            if self._url_config["domain_name"] and re.search(self._url_config["domain_name"], hosts):
+                new_hosts = hosts.replace(self._url_config["domain_name"], self._url_config["url"])
                 return new_hosts
-        elif self._url:
-            new_hosts = parse.urljoin(self._request_way + "://" + self._url, hosts)
+        elif self._url_config["url"]:
+            new_hosts = parse.urljoin(self._url_config["request_way"] + "://" + self._url_config["url"], hosts)
             return new_hosts
         return hosts
 
