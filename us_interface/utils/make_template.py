@@ -1,19 +1,17 @@
 import os
 import jinja2
-from us_interface.utils.load_file import get_all_subdirectories, load_yaml, locate_file
+from us_interface.utils.file_operations import get_all_subdirectories, load_yaml, locate_file
 
 
 __PAGE_TEMPLATE__ = jinja2.Template(
     """#page template
 from us_interface.base.base_api import BaseApi
-from us_interface.utils.load_file import load_yaml
+from us_interface.utils.file_operations import load_yaml
 
 
 class {{ classname }}(BaseApi):
-
     _file_path = "{{ file_path }}"
     _{{page_data_name}} = load_yaml(_file_path)
-    
 {% for methodname in method_list %}
     def {{ methodname }}(self, **kwargs):
         api_data = self._{{page_data_name}}["{{ methodname }}"]
