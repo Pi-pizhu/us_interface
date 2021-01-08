@@ -2,7 +2,7 @@ import os
 import jinja2
 from us_interface.utils.file_operations import get_all_subdirectories, load_yaml, locate_file
 
-
+# todo:base_api已修改，下次需要根据新方式修改模板
 __PAGE_TEMPLATE__ = jinja2.Template(
     """#page template
 from us_interface.base.base_api import BaseApi
