@@ -1,8 +1,9 @@
 # @Author : TongTong
-
 import pytest
 from ...api_page.member import Member
+
 member = Member()
+
 
 # 冒烟测试的前后置
 @pytest.fixture(scope="session")

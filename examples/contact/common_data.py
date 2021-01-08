@@ -10,10 +10,11 @@ class Base:
     # 获取token
     def get_token(self):
         gl_config = GlobalConfig()
-        corp_id = gl_config.get_global_variable("token", "corp_id")
-        secret = gl_config.get_global_variable("token", "corp_secret")
+        corp_id = gl_config.config_var.get("corp_id")
+        secret = gl_config.config_var.get("corp_secret")
         token = GetToken().token(corp_id, secret)
         return token["access_token"]
+
 
 # 单例模式获取到的token值
 contact_token = Base().get_token()

@@ -1,6 +1,6 @@
 # page template
 from us_interface.base.base_api import BaseApi
-from us_interface.utils.load_file import load_yaml
+from us_interface.utils.file_operations import load_yaml
 
 
 class TagAdd(BaseApi):

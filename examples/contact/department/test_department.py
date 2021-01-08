@@ -2,7 +2,7 @@ import os
 import allure
 import pytest
 
-from us_interface.utils.load_file import load_yaml
+from us_interface.utils.file_operations import load_yaml
 from ...api_page.department_api import DepartmentApi
 from loguru import logger
 

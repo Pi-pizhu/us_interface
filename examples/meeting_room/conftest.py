@@ -1,11 +1,11 @@
 import pytest
-
 from us_interface.config.global_config import GlobalConfig
 from ..api_page.get_token import GetToken
 from ..api_page.meeting_room_api import MeetingRoomApi
 
 # 初始化会议室对象
 meeting = MeetingRoomApi()
+
 
 # 获取token值
 @pytest.fixture(scope="session")
@@ -15,6 +15,7 @@ def meeting_token():
     secret = gl_config.get_global_variable("token", "meeting_room_secret")
     token = GetToken().token(corp_id, secret)
     return token["access_token"]
+
 
 # 会议室冒烟测试前后置步骤
 @pytest.fixture(scope="session")

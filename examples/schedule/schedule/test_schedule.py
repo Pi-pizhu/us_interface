@@ -17,7 +17,7 @@ class TestSchedule():
     def test_add_calendar_smoke(self, schedule_token):
         logger.info("--------开始增加日程冒烟测试")
         res = self.schedule.add(schedule_token, "schedule", "2020-10-01 00:00:00", "2020-10-02 00:00:00",
-                                         "calendar", "abc", None, None)
+                                "calendar", "abc", None, None)
         logger.info("--------结束测试")
         assert 0 == res["errcode"]
         assert "ok" in res["errmsg"]
@@ -27,7 +27,7 @@ class TestSchedule():
     def test_edit_calendar_smoke(self, schedule_token):
         logger.info("--------开始编辑日程冒烟测试")
         res = self.schedule.edit(schedule_token, "schedule", 1, "2020-10-01 00:00:00", "2020-10-02 00:00:00",
-                                          "calendar", "abc", None, None)
+                                 "calendar", "abc", None, None)
         logger.info("--------结束测试")
         assert 0 == res["errcode"]
         assert "ok" in res["errmsg"]

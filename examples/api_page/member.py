@@ -1,13 +1,11 @@
-#page template
+# page template
 from us_interface.base.base_api import BaseApi
-from us_interface.utils.load_file import load_yaml
+from us_interface.utils.file_operations import load_yaml
 
 
 class Member(BaseApi):
-
     _file_path = "/Users/yewenkai/PycharmProjects/HogwartsSDET14/us_interface/examples/api/member.yml"
     _member_data = load_yaml(_file_path)
-    
 
     def add_member(self, token, name, userid, mobile):
         api_data = self._member_data["add_member"]
@@ -62,5 +60,3 @@ class Member(BaseApi):
         p_data = {"token": token, "size_type": size_type}
         api_data = self.template_data(api_data, p_data)
         return self.request_http(api_data)
-
-    

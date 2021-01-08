@@ -18,6 +18,7 @@ def depart_smoke(token):
     depart.delete(token, 5)
     depart.delete(token, 6)
 
+
 # 增加部门的前后置步骤
 @pytest.fixture(scope="session")
 def add_depart(token):
@@ -26,12 +27,14 @@ def add_depart(token):
     yield
     depart.delete(token, 5)
 
+
 # 编辑部门的前后置步骤
 @pytest.fixture(scope="session")
 def edit_depart(token):
     depart.add(token, 1, "smoke2")
     yield
     depart.delete(token, 5)
+
 
 # 删除部门的前后置步骤
 @pytest.fixture(scope="session")
